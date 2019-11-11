@@ -13,6 +13,6 @@ kubeadm init --pod-network-cidr=192.168.0.0/16
 
 for flannel
 
-kubeadm ini --pod-network-cidr=10.244.0.0/16
+kubeadm init --pod-network-cidr=10.244.0.0/16
 
 and install CNI
