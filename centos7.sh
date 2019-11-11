@@ -1,7 +1,10 @@
 #!/bin/bash
 
-yum -y update
-yum -y install net-tools wget telnet yum-utils device-mapper-persistent-data lvm2
+##disable firefall
+systemctl stop firewalld && systemctl disable firewalld
+
+##install tool
+yum -y install net-tools sysstat wget telnet yum-utils device-mapper-persistent-data lvm2 nfs-utils
 
 ### Add Docker repository.
 yum-config-manager \
@@ -9,7 +12,11 @@ yum-config-manager \
   https://download.docker.com/linux/centos/docker-ce.repo
 
 ## Install Docker CE.
-yum -y update && yum -y  install docker-ce-18.06.2.ce
+yum -x docker-ce -y update && yum -y install docker-ce-18.06.2.ce
+
+## lock version Docker CE
+yum -y install yum-versionlock
+yum versionlock add docker-ce
 
 ## Create /etc/docker directory.
 mkdir /etc/docker
@@ -38,7 +45,7 @@ systemctl restart docker
 
 # Disable swap
 swapoff -a
-sed -i 's/^\(.*swap.*\)$/#\1/' /etc/fstab 
+sed -i 's/^\(.*swap.*\)$/#\1/' /etc/fstab
 
 # load netfilter probe specifically
 modprobe br_netfilter
@@ -57,9 +64,10 @@ enabled=1
 gpgcheck=1
 repo_gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+exclude=kube*
 EOF
 
-yum -y install kubectl kubelet kubeadm
+yum -y install kubelet-1.15.5-0 kubeadm-1.15.5-0 kubectl-1.15.5-0 --disableexcludes=kubernetes
 systemctl  restart kubelet && systemctl enable kubelet
 
 # Enable IP Forwarding
@@ -69,10 +77,7 @@ net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
 
-
+sysctl --system
 # Restarting services
 systemctl daemon-reload
 systemctl restart kubelet
-
-# Install nfs utils for Kubernetes NFS driver
-yum -y install nfs-utils
