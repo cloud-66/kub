@@ -1,12 +1,12 @@
 #!/bin/bash
 
-##disable firefall
+## Disable firewall
 systemctl stop firewalld && systemctl disable firewalld
 
-##install tool
+## Install tool
 yum -y install net-tools sysstat wget telnet yum-utils device-mapper-persistent-data lvm2 nfs-utils
 
-### Add Docker repository.
+## Add Docker repository.
 yum-config-manager \
   --add-repo \
   https://download.docker.com/linux/centos/docker-ce.repo
@@ -14,14 +14,14 @@ yum-config-manager \
 ## Install Docker CE.
 yum -x docker-ce -y update && yum -y install docker-ce-18.06.2.ce
 
-## lock version Docker CE
+## Lock version Docker CE
 yum -y install yum-versionlock
 yum versionlock add docker-ce
 
 ## Create /etc/docker directory.
 mkdir /etc/docker
 
-# Setup daemon.
+## Setup daemon.
 cat > /etc/docker/daemon.json <<EOF
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
@@ -47,10 +47,10 @@ systemctl restart docker
 swapoff -a
 sed -i 's/^\(.*swap.*\)$/#\1/' /etc/fstab
 
-# load netfilter probe specifically
+# Load netfilter probe specifically
 modprobe br_netfilter
 
-# disable SELinux. If you want this enabled, comment out the next 2 lines. But you may encounter issues with enabling SELinux
+# Lisable SELinux. If you want this enabled, comment out the next 2 lines. But you may encounter issues with enabling SELinux
 setenforce 0
 sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
