@@ -1,4 +1,5 @@
 #!/bin/bash
+#!/usr/bin/env bash
 
 ## Disable firewall
 systemctl stop firewalld && systemctl disable firewalld
