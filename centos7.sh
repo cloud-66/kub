@@ -67,7 +67,7 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 exclude=kube*
 EOF
 
-yum -y install kubelet-1.15.5-0 kubeadm-1.15.5-0 kubectl-1.15.5-0 --disableexcludes=kubernetes
+yum -y install kubelet-1.15.7-0 kubeadm-1.15.7-0 kubectl-1.15.7-0 --disableexcludes=kubernetes
 systemctl  restart kubelet && systemctl enable kubelet
 
 # Enable IP Forwarding
