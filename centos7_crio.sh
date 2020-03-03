@@ -51,8 +51,8 @@ EOF
 
 yum -y install kubelet-1.14.* kubeadm-1.14.* kubectl-1.14.* --disableexcludes=kubernetes
 
-systemctl daemon-reload && systemctl  restart kubelet && systemctl enable kubelet
-
 cat <<EOF > /etc/default/kubelet
 KUBELET_EXTRA_ARGS=--container-runtime=remote --cgroup-driver=systemd --runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice --container-runtime-endpoint='unix:///var/run/crio/crio.sock' --runtime-request-timeout=5m
 EOF
+
+systemctl daemon-reload && systemctl  restart kubelet && systemctl enable kubelet
