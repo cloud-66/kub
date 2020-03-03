@@ -26,7 +26,8 @@ yum-config-manager --add-repo=https://cbs.centos.org/repos/paas7-crio-114-releas
 yum install --nogpgcheck -y cri-o
 
 # Start CRIO
-systemctl enable crio && systemctl start crio
+#systemctl enable crio &&
+systemctl start crio
 
 # Disable swap
 swapoff -a
