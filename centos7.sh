@@ -4,12 +4,8 @@
 ## Disable firewall
 systemctl stop firewalld && systemctl disable firewalld
 
-## Lock version Docker CE
-yum -y install yum-versionlock
-yum versionlock add docker-ce containerd.io
-
 ## Install tool
-yum -y update && yum -y install net-tools sysstat wget telnet yum-utils device-mapper-persistent-data lvm2 nfs-utils
+yum -y install net-tools sysstat wget telnet yum-utils device-mapper-persistent-data lvm2 nfs-utils
 
 ## Add Docker repository.
 yum-config-manager \
@@ -17,7 +13,11 @@ yum-config-manager \
   https://download.docker.com/linux/centos/docker-ce.repo
 
 ## Install Docker CE.
-yum -y install containerd.io-1.2.10 docker-ce-19.03.4 docker-ce-cli-19.03.4
+yum -x containerd.io docker-ce -y update && yum -y install containerd.io-1.2.10 docker-ce-19.03.4 docker-ce-cli-19.03.4
+
+## Lock version Docker CE
+yum -y install yum-versionlock
+yum versionlock add docker-ce containerd.io
 
 ## Create /etc/docker directory.
 mkdir /etc/docker
