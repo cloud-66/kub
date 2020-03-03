@@ -53,5 +53,5 @@ yum -y install kubelet-1.14.* kubeadm-1.14.* kubectl-1.14.* --disableexcludes=ku
 systemctl daemon-reload && systemctl  restart kubelet && systemctl enable kubelet
 
 cat <<EOF > /etc/sysconfig/kubelet
-KUBELET_EXTRA_ARGS=--cgroup-driver="systemd"
+KUBELET_EXTRA_ARGS=--cgroup-driver="systemd" --runtime-cgroups=/systemd/system.slice  --kubelet-cgroups=/systemd/system.slice
 EOF
