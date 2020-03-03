@@ -17,7 +17,11 @@ yum-config-manager \
   https://download.docker.com/linux/centos/docker-ce.repo
 
 ## Install Docker CE.
-yum -y install containerd.io-1.2.10 docker-ce-19.03.4 docker-ce-cli-19.03.4
+yum -x docker-ce -y update && yum -y install docker-ce-18.06.2.ce
+
+## Lock version Docker CE
+yum -y install yum-versionlock
+yum versionlock add docker-ce
 
 ## Create /etc/docker directory.
 mkdir /etc/docker
@@ -68,7 +72,7 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 exclude=kube*
 EOF
 
-yum -y install kubelet kubeadm kubectl --disableexcludes=kubernetes
+yum -y install kubelet-1.15.7-0 kubeadm-1.15.7-0 kubectl-1.15.7-0 --disableexcludes=kubernetes
 systemctl  restart kubelet && systemctl enable kubelet
 
 # Enable IP Forwarding
