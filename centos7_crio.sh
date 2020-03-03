@@ -27,7 +27,7 @@ yum install --nogpgcheck -y cri-o
 
 # Start CRIO
 #systemctl enable crio &&
-systemctm enable crio && systemctl start crio
+systemctl enable crio && systemctl start crio
 
 # Disable swap
 swapoff -a
