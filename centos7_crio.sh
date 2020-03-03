@@ -27,6 +27,7 @@ yum install --nogpgcheck -y cri-o
 
 # Start CRIO
 #systemctl enable crio &&
+rm -rf /etc/cni/net.d/*
 systemctl enable crio && systemctl start crio
 
 # Disable swap
