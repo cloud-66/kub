@@ -53,7 +53,8 @@ EOF
 yum -y install kubelet-1.14.* kubeadm-1.14.* kubectl-1.14.* --disableexcludes=kubernetes
 
 cat <<EOF > /etc/sysconfig/kubelet
-KUBELET_EXTRA_ARGS=--cgroup-driver=systemd --network-plugin=cni --runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice --runtime-request-timeout=5m
+KUBELET_EXTRA_ARGS=--cgroup-driver=systemd --network-plugin=cni --kubelet-cgroups=/system.slice/kubelet.service --runtime-cgroups=/system.slice/crio.service --runtime-request-timeout=5m
 EOF
+#sed -i 's/^\(.*swap.*\)$/#\1/' /etc/systemd/system.conf
 
 systemctl daemon-reload && systemctl  restart kubelet && systemctl enable kubelet
