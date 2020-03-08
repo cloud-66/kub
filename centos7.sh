@@ -68,7 +68,7 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 exclude=kube*
 EOF
 
-yum -y install kubelet-1.14.* kubeadm-1.14.* kubectl-1.14.* --disableexcludes=kubernetes
+yum -y install kubelet-1.15.* kubeadm-1.15.* kubectl-1.15.* --disableexcludes=kubernetes
 
 cat <<EOF > /usr/lib/systemd/system/kubelet.service.d/50-Accounting.conf
 [Service]
