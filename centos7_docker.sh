@@ -68,8 +68,13 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 exclude=kube*
 EOF
 
-yum -y install kubelet-1.15.7-0 kubeadm-1.15.7-0 kubectl-1.15.7-0 --disableexcludes=kubernetes
-systemctl  restart kubelet && systemctl enable kubelet
+yum -y install kubelet-1.14.* kubeadm-1.14.* kubectl-1.14.* --disableexcludes=kubernetes
+
+cat <<EOF > /usr/lib/systemd/system/kubelet.service.d/50-Accounting.conf
+[Service]
+CPUAccounting=yes
+MemoryAccounting=yes
+EOF
 
 # Enable IP Forwarding
 echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
@@ -80,5 +85,4 @@ EOF
 
 sysctl --system
 # Restarting services
-systemctl daemon-reload
-systemctl restart kubelet
+systemctl daemon-reload && systemctl restart kubelet && systemctl enable kubelet
