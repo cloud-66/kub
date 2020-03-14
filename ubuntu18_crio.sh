@@ -31,4 +31,4 @@ sudo apt install cri-o-1.17 -y
 # create synlink
 sudo ln -s /usr/lib/cri-o-runc/sbin/runc /usr/bin/runc
 
-sudo systemctl daemon-reload && sudo systemctl start crio
+sudo systemctl daemon-reload && sudo systemctl start crio && sudo systemctl enable crio
