@@ -17,7 +17,7 @@ yum-config-manager \
   https://download.docker.com/linux/centos/docker-ce.repo
 
 ## Install Docker CE.
-yum -y install containerd.io-1.2.10 docker-ce-19.03.4 docker-ce-cli-19.03.4
+yum -y install containerd.io-1.2.13 docker-ce-19.03.4 docker-ce-cli-19.03.4
 
 ## Create /etc/docker directory.
 mkdir /etc/docker
@@ -68,12 +68,12 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cl
 exclude=kube*
 EOF
 
-yum -y install kubelet kubeadm kubectl --disableexcludes=kubernetes
+yum -y install kubelet-1.17.* kubeadm-1.17.* kubectl-1.17.* --disableexcludes=kubernetes
 systemctl  restart kubelet && systemctl enable kubelet
 
 # Enable IP Forwarding
 echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
-cat <<EOF >  /etc/sysctl.d/k8s.conf
+cat <<EOF >  /etc/sysctl.d/99-k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
