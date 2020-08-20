@@ -20,23 +20,28 @@ sudo apt update -y && sudo apt install docker-ce -y
 
 
 # Setup daemon.
-cat > /etc/docker/daemon.json <<EOF
+sudo bash -c 'cat << EOF > /etc/docker/daemon.json
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
   "log-driver": "json-file",
   "log-opts": {
     "max-size": "100m"
   },
-  "storage-driver": "overlay2"
+  "storage-driver": "overlay2",
+  "storage-opts": [
+    "overlay2.override_kernel_check=true"
+  ]
 }
-EOF
+EOF'
+
 
 sudo mkdir -p /etc/systemd/system/docker.service.d
 
 # Restart docker.
-systemctl daemon-reload
-systemctl enable docker
-systemctl restart docker
+sudo systemctl set-property porter.service MemoryAccounting=yes CPUAccounting=yes
+sudo systemctl set-property containerd.service MemoryAccounting=yes CPUAccounting=yes
+sudo systemctl daemon-reload && sudo systemctl enable porter && sudo systemctl restart porter
+
 
 cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
