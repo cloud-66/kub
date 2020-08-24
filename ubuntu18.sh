@@ -42,6 +42,7 @@ sudo systemctl set-property porter.service MemoryAccounting=yes CPUAccounting=ye
 sudo systemctl set-property containerd.service MemoryAccounting=yes CPUAccounting=yes
 sudo systemctl daemon-reload && sudo systemctl enable porter && sudo systemctl restart porter
 
+sudo usermod -aG docker admin
 
 cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
