@@ -17,7 +17,7 @@ yum-config-manager \
   https://download.docker.com/linux/centos/docker-ce.repo
 
 ## Install Docker CE.
-yum -y install containerd.io docker-ce-19.03.* docker-ce-cli-19.03.*
+yum -y install containerd.io-1.2.* docker-ce-19.03.* docker-ce-cli-19.03.*
 
 ## Create /etc/docker directory.
 mkdir /etc/docker
