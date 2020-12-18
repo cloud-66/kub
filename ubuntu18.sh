@@ -38,9 +38,9 @@ EOF'
 sudo mkdir -p /etc/systemd/system/docker.service.d
 
 # Restart docker.
-sudo systemctl set-property porter.service MemoryAccounting=yes CPUAccounting=yes
+sudo systemctl set-property docker.service MemoryAccounting=yes CPUAccounting=yes
 sudo systemctl set-property containerd.service MemoryAccounting=yes CPUAccounting=yes
-sudo systemctl daemon-reload && sudo systemctl enable porter && sudo systemctl restart porter
+sudo systemctl daemon-reload && sudo systemctl enable docker && sudo systemctl restart docker
 
 sudo usermod -aG docker admin
 
