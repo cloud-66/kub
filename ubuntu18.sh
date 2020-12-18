@@ -16,7 +16,7 @@ sudo add-apt-repository \
   stable"
 
 ## Install Docker CE.
-sudo apt update -y && sudo apt install docker-ce -y
+sudo apt update -y && sudo apt install docker-ce=5:19.03.14 -y
 
 
 # Setup daemon.
