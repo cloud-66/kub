@@ -51,8 +51,8 @@ EOF
 sudo sysctl --system
 
 # Disable swap
-swapoff -a
-sed -i 's/^\(.*swap.*\)$/#\1/' /etc/fstab
+sudo swapoff -a
+sudo sed -i 's/^\(.*swap.*\)$/#\1/' /etc/fstab
 
 sudo apt-get update && sudo apt-get install -y apt-transport-https curl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
