@@ -23,7 +23,19 @@ EOF
 sudo sysctl --system
 
 # (Install containerd)
-sudo apt-get update && sudo apt-get install -y containerd
+sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+
+## Add Docker's official GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key --keyring /etc/apt/trusted.gpg.d/docker.gpg add -
+
+## Add Docker apt repository.
+sudo add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable"
+
+## Install containerd
+sudo apt-get update && sudo apt-get install -y containerd.io
 
 # Configure containerd
 sudo mkdir -p /etc/containerd
